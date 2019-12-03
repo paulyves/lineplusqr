@@ -27,9 +27,7 @@
       </div>
       <div class="col-10  text-white d-flex justify-content-between py-2">
         <span class="text-truncate">Password: {{ extension.password }}</span>
-        <b-button variant="outline-light" size="sm" ref="pw"  @click="doCopy('pw', extension.password)">{{
-          plabel
-        }}</b-button>
+        <b-button variant="outline-light" size="sm" ref="pw"  @click="doCopy('pw', extension.password)">Copy</b-button>
       </div>
     </div>
   </div>
@@ -40,12 +38,6 @@ const QRCode = require("easyqrcodejs");
 export default {
   name: "mobile-block",
   props: ["extension", "ind"],
-  data() {
-    return {
-      ulabel: "Copy",
-      plabel: "Copy"
-    };
-  },
   mounted() {
     let options = {
       text: this.extension.qr,

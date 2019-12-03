@@ -1,23 +1,10 @@
 <template>
   <div class="qrs">
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-auto">
-      <div class="row align-items-center">
-        <div class="col-xs-1">
-          <i class="material-icons align-middle" @click="prev">arrow_back_ios</i>
-        </div>
-        <div class="col-auto">
-          <QrBlock v-for="(extension, index) in extensions" :key="index" :extension="extension" :activeCard ="active == index" />
-        </div>
-        <div class="col-xs-1" @click="next">
-          <i class="material-icons">arrow_forward_ios</i>
-        </div>
-      </div>
+    <div class="container con d-flex align-items-center">
+      <div class="row x d-flex justify-content-between mb-5">
+      <QrBlock v-for="(extension, index) in extensions" :key="index" :ind="index" :extension="extension"/>
     </div>
-      </div>
     </div>
-    
   </div>
 </template>
 
@@ -31,23 +18,28 @@ export default {
   },
   data() {
     return {
-      active : 0
+      swiperOption: {
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+      },
+      active: 0
     };
   },
-  methods : {
-    next(){
-      if(this.active + 1 != this.extensions.length)
-        this.active++
-      else
-        this.active = 0
-    },
-    prev(){
-      if(this.active != 0)
-        this.active--
-      else
-        this.active = this.extensions.length -1
+  methods: {
+    currentSlide() {
+      this.active = this.$refs.mySwiper.swiper.activeIndex;
     }
   }
-
 };
 </script>
+<style scoped>
+.con{
+  min-height: 100vh;
+}
+.x{
+  height: 700px;
+  width: 1040px;
+}
+</style>

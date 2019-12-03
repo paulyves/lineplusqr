@@ -10,6 +10,7 @@ VueClipboard.config.autoSetContainer = true
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'swiper/dist/css/swiper.css'
+import "material-icons/iconfont/material-icons.css";
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(BootstrapVue)
