@@ -1,7 +1,7 @@
 <template>
   <div
     class="mobile custom-height d-flex justify-content-between flex-column"
-    :class="[active > 3 ? 'not-ringgroup' : 'in-ringgroup']"
+    :class="[active > 5 ? 'not-ringgroup' : 'in-ringgroup']"
   >
     <div class="container-fluid">
       <swiper

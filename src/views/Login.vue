@@ -4,57 +4,99 @@
       <div class="row">
         <div class="col"></div>
         <div
-          class="col-md-6 col-sm-6 col-10 col-lg-5 col-xl-5 e border shadow mb-5"
+          class="col-auto e border shadow mb-5"
         >
-          <div class="row justify-content-center mt-2">
-            <img
-              src="../assets/login_logo.png"
-              class="img-fluid"
-              alt="Responsive image"
-            />
-          </div>
           <div class="row">
-            <form class="container col-10">
-              <div class="form-group">
-                <label for="senumber">Serial Number</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="senumber"
-                  v-model="serialNumber"
-                  :maxlength="19"
-                />
-              </div>
-              <div class="form-group">
-                <label for="inputPasswd">Password</label>
-                <PasswordToggle
-                  v-model="password"
-                  aria-describedby="passwdHelp"
-                  :maxlength="19"
-                  id="inputPasswd"
-                />
-              </div>
-              <div class="row justify-content-center">
-                <button
-                  type="submit"
-                  class="btn btn-primary center"
-                  @click.prevent="login"
+            <div class="col-6">
+              <h3 class="mt-4">
+                WARNING: THIS SYSTEM IS FOR AUTHORIZED USERS ONLY
+              </h3>
+              <p>
+                All access, transactions, and files on this PLDT-owned system
+                may be monitored, intercepted, recorded, copied, audited,
+                inspected, and reported to Company authorities by authorized IT
+                Security personnel. Unauthorized access or violations of the
+                terms of use may subject you to administrative disciplinary
+                action and possible criminal prosecution.
+              </p>
+              <p>
+                By pressing 'Login', you acknowledge and agree to the terms and
+                conditions of use stated in the Inter-Company Memorandum No.:
+                005-14: Unified Information Technology (IT) Policies which
+                includes the PROHIBITION of the following: installation of
+                unauthorized connections and devices, violation of software
+                licenses, violation of access rights limitations, leakage of
+                confidential and proprietary data and information, and sharing
+                of user accounts and passwords.
+              </p>
+              <p>
+                * For more information on Inter-Company Memorandum No.: 005-14:
+                Unified Information Technology (IT) Policies, please access
+                <a
+                  class="text-overflow"
+                  href="http://pldtinfocentral/sites/ITSecurity/Policies/Forms/AllPages.aspx"
+                  >http://pldtinfocentral/sites/ITSecurity/Policies/Forms/AllPages.aspx</a
                 >
-                  Login
-                </button>
+              </p>
+              <p>
+                Contact Helpdesk at 620-2700 for further details and inquiries.
+              </p>
+            </div>
+            <div class="col-6">
+              <div class="row justify-content-center mt-2">
+                <img
+                  src="../assets/login_logo.png"
+                  class="img-fluid"
+                  alt="Responsive image"
+                />
               </div>
-            </form>
-          </div>
-          <div class="row justify-content-center mt-3">
-            <div class="col">
-              <!-- <div
+              <div class="row">
+                <form class="container col-10">
+                  <div class="form-group text-center">
+                    <label for="senumber">Serial Number</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="senumber"
+                      v-model="serialNumber"
+                      :maxlength="19"
+                    />
+                  </div>
+                  <div class="form-group text-center">
+                    <label for="inputPasswd">Password</label>
+                    <PasswordToggle
+                      v-model="password"
+                      aria-describedby="passwdHelp"
+                      :maxlength="19"
+                      id="inputPasswd"
+                    />
+                  </div>
+                  <div class="row justify-content-center">
+                    <button
+                      type="submit"
+                      class="btn btn-primary center"
+                      @click.prevent="login"
+                    >
+                      Login
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div class="row justify-content-center mt-3">
+                <div class="col">
+                  <!-- <div
                 class="alert alert-danger text-center mb-0"
                 role="alert"
                 v-if="getErrorMessage||notif"
               >{{ getErrorMessage||notif}}</div> -->
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col"></div>
+              </div>
+              <!-- <small class="float-right mt-4">{{ version }}</small> -->
             </div>
           </div>
-          <small class="float-right mt-4">{{ version }}</small>
         </div>
         <div class="col"></div>
       </div>
@@ -133,7 +175,7 @@ img {
   width: 150px;
 }
 .e {
-  min-height: 500px;
+  min-height: 570px;
   border-radius: 0.5rem;
 }
 </style>

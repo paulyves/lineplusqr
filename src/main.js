@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'swiper/dist/css/swiper.css'
 import "material-icons/iconfont/material-icons.css";
+import store from './store'
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(BootstrapVue)
@@ -20,5 +21,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

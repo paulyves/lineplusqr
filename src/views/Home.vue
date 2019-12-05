@@ -29,49 +29,49 @@ export default {
           number: 1008909,
           username: "pldt-line-plus-63-2-1008909-12",
           password: "DsqrAxarwzS",
-          qr: `csc:"pldt-line-plus-63-2-1008909-12":DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
+          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
         },
         {
           number: 1008909,
           username: "pldt-line-plus-63-2-1008909-12",
           password: "DsqrAxarwzS",
-          qr: `csc:"pldt-line-plus-63-2-1008909-12":DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
+          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
         },
         {
           number: 1008909,
           username: "pldt-line-plus-63-2-1008909-12",
           password: "DsqrAxarwzS",
-          qr: `csc:"pldt-line-plus-63-2-1008909-12":DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
+          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
         },
         {
           number: 1008909,
           username: "pldt-line-plus-63-2-1008909-12",
           password: "DsqrAxarwzS",
-          qr: `csc:"pldt-line-plus-63-2-1008909-12":DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
+          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
         },
         {
           number: 1008909,
           username: "pldt-line-plus-63-2-1008909-12",
           password: "DsqrAxarwzS",
-          qr: `csc:"pldt-line-plus-63-2-1008909-12":DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
+          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
         },
         {
           number: 1008909,
           username: "pldt-line-plus-63-2-1008909-12",
           password: "DsqrAxarwzS",
-          qr: `csc:"pldt-line-plus-63-2-1008909-12":DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
+          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
         },
         {
           number: 1008909,
           username: "pldt-line-plus-63-2-1008909-12",
           password: "DsqrAxarwzS",
-          qr: `csc:"pldt-line-plus-63-2-1008909-12":DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
+          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
         },
         {
           number: 1008909,
           username: "pldt-line-plus-63-2-1008909-12",
           password: "DsqrAxarwzS",
-          qr: `csc:"pldt-line-plus-63-2-1008909-12":DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
+          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
         },
       ],
       error: true,

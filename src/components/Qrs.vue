@@ -1,9 +1,20 @@
 <template>
   <div class="qrs">
-    <div class="container con d-flex align-items-center">
-      <div class="row x d-flex justify-content-between mb-5">
-      <QrBlock v-for="(extension, index) in extensions" :key="index" :ind="index" :extension="extension"/>
-    </div>
+    <div class="d-flex flex-column justify-content-between">
+      <div class="container con d-flex justify-content-center pt-3">
+        <div class="row x d-flex justify-content-between">
+          <QrBlock
+            v-for="(extension, index) in extensions"
+            :key="index"
+            :ind="index"
+            :extension="extension"
+            :isRingGroup="index < 6"
+          />
+        </div>
+      </div>
+      <div class="container d-flex justify-content-center">
+        <img src="@/assets/banner.png"/>
+      </div>
     </div>
   </div>
 </template>
@@ -35,11 +46,8 @@ export default {
 };
 </script>
 <style scoped>
-.con{
-  min-height: 100vh;
-}
-.x{
-  height: 700px;
-  width: 1040px;
+.con {
+  /* min-height: 100vh; */
+  width: 930px;
 }
 </style>

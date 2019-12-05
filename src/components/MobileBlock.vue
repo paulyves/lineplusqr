@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="row justify-content-center pt-2">
-      <h1 class="text-white">{{extensionNumber}}</h1>
+      <h1 class="text-white text-bold">{{extensionNumber}}</h1>
     </div>
 
     <div class="row justify-content-center pt-2">
@@ -43,7 +43,7 @@ export default {
       text: this.extension.qr,
       logo: require("@/assets/pldt.png"),
       // colorDark: this.selected == "PLDT" ? "#d32030" : "#0047ba",
-      colorDark: this.ind < 4? "#d32030":"#12a74f",
+      colorDark: this.ind < 6? "#d32030":"#12a74f",
       width: 350,
       height: 350,
       correctLevel: QRCode.CorrectLevel.H,
