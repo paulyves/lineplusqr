@@ -4,9 +4,9 @@
       <div class="col-auto text-white">Hub No: {{ extension.number }}</div>
     </div>
     <div class="row justify-content-center well pt-2">
-      <div class="col-8 p-3 rounded bg-white">
+      <div class="col-8 p-3 rounded bg-white d-flex justify-content-center flex-column">
         <div :class="`qr${ind}`" class="qr"></div>
-        <small>Login QR code</small>
+        <small class="align-self-center">Login QR code</small>
       </div>
     </div>
     <div class="row justify-content-center pt-2">
@@ -26,7 +26,7 @@
         </button>
       </div>
       <div class="col-10  text-white d-flex justify-content-between py-2">
-        <span class="text-truncate">Password: {{ extension.password }}</span>
+        <span class="text-truncate">Password: {{ extension.password | passwordify }}</span>
         <b-button variant="outline-light" size="sm" ref="pw"  @click="doCopy('pw', extension.password)">Copy</b-button>
       </div>
     </div>
@@ -52,6 +52,12 @@ export default {
       dotScale: 0.8
     };
     new QRCode(document.getElementsByClassName(`qr${this.ind}`)[0], options);
+    document.querySelector(`.qr${this.ind}`).removeAttribute('title');
+  },
+  filters:{
+    passwordify(string){
+      return string.replace(/./g, '•');
+    }
   },
   methods: {
     doCopy(ref, string) {
@@ -81,6 +87,10 @@ export default {
 </script>
 
 <style>
+.qr{
+  display: flex;
+  justify-content: center;
+}
 .qr img {
   width: 90%;
 }

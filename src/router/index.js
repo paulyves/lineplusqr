@@ -10,13 +10,16 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-    props:true
+    props:true,
+    meta : {
+      requiresAuth : true
+    }
   },
   {
-    path: '/login',
+    path: '/login/:params?',
     name: 'login',
     component: Login,
-    // props:true
+    props : true
   },
 ]
 

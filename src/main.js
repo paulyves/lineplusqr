@@ -18,7 +18,37 @@ Vue.use(BootstrapVue)
 Vue.use(VueClipboard)
 
 Vue.config.productionTip = false
-
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.isLoggedIn) {
+      next({
+        name: "login"
+      });
+    } else {
+      store
+        .commit("cancelToken")
+      store
+        .dispatch("refreshToken")
+        .then(() => {
+          next();
+        })
+        .catch(error => {
+          if (
+            error.response.status == 401 &&
+            error.response.data.error == "token_expired"
+          ){
+            store.dispatch("addErrorMsg", "Session Timeout");
+          }
+          next({
+            name: "login"
+          });
+          //
+        });
+    }
+  } else {
+    next(); // make sure to always call next()!
+  }
+});
 new Vue({
   router,
   store,

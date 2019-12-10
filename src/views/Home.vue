@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <div @click="logout" class="float-right mt-2 mr-3 d-none d-md-block logout-link">Log out</div>
     <Qrs :extensions="extensions" class="d-none d-md-block" />
     <Mobile :extensions="extensions" class="d-block d-md-none" />
     <!-- <h1 class="display-4 pt-5 d-none d-md-block" v-if="error">
@@ -11,10 +12,10 @@
 
 <script>
 // @ is an alias to /src
+import { mapActions, mapGetters } from "vuex";
 import Qrs from "@/components/Qrs";
 import Mobile from "@/components/Mobile";
 // import axios from "axios";
-const axios = require("axios");
 export default {
   name: "home",
   components: {
@@ -24,67 +25,18 @@ export default {
   props: ["serial"],
   data() {
     return {
-      extensions: [
-        {
-          number: 1008909,
-          username: "pldt-line-plus-63-2-1008909-12",
-          password: "DsqrAxarwzS",
-          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
-        },
-        {
-          number: 1008909,
-          username: "pldt-line-plus-63-2-1008909-12",
-          password: "DsqrAxarwzS",
-          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
-        },
-        {
-          number: 1008909,
-          username: "pldt-line-plus-63-2-1008909-12",
-          password: "DsqrAxarwzS",
-          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
-        },
-        {
-          number: 1008909,
-          username: "pldt-line-plus-63-2-1008909-12",
-          password: "DsqrAxarwzS",
-          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
-        },
-        {
-          number: 1008909,
-          username: "pldt-line-plus-63-2-1008909-12",
-          password: "DsqrAxarwzS",
-          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
-        },
-        {
-          number: 1008909,
-          username: "pldt-line-plus-63-2-1008909-12",
-          password: "DsqrAxarwzS",
-          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
-        },
-        {
-          number: 1008909,
-          username: "pldt-line-plus-63-2-1008909-12",
-          password: "DsqrAxarwzS",
-          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
-        },
-        {
-          number: 1008909,
-          username: "pldt-line-plus-63-2-1008909-12",
-          password: "DsqrAxarwzS",
-          qr: `csc:pldt-line-plus-63-2-1008909-12:DsqrAxarwzS@${process.env.VUE_APP_QR_PREFIX}`
-        },
-      ],
+      extensions: [],
       error: true,
       errorMsg: ""
     };
   },
+ computed: {
+    ...mapGetters(["allExtensions"])
+  },
   methods: {
+    ...mapActions(["postQrs","addErrorMsg"]),
     getQrs() {
-      const serial = {
-        serialNo: this.serial
-      };
-      axios
-        .post(process.env.VUE_APP_REST_API, serial)
+      this.postQrs()
         .then(response => {
           this.error = false;
           const hub = response.data.static.waveNumber;
@@ -98,19 +50,22 @@ export default {
           });
         })
         .catch(error => {
-          this.error = true;
           if (
             error.response.status == 401 &&
-            error.response.data.error == "Invalid serial number"
-          ) {
-            this.errorMsg = "Invalid Input";
-          } else if (
-            error.response.status == 402 &&
-            error.response.data.error == "Invalid Network"
-          ) {
-            this.errorMsg = "Please connect to the same router as your device.";
-          } else this.errorMsg = "Access Denied";
+            error.response.data.error == "token_expired"
+          ){
+            this.addErrorMsg("Session Timeout");
+          }
+          this.$router.push({
+            name: "login"
+          });
         });
+    },
+    logout(){
+      localStorage.removeItem('l_token');
+      this.$router.push({
+            name: "login"
+      });
     }
   },
   mounted() {
@@ -118,3 +73,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+.logout-link{
+  cursor: pointer;
+  font-weight: bold;
+}
+</style>

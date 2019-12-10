@@ -11,13 +11,13 @@
         <div class="col-auto text-white pl-0">{{ extension.number }}</div>
       </div>
       <div class="row justify-content-center well pt-1">
-        <div class="col-auto p-3 rounded bg-white">
+        <div class="col-auto p-3 rounded bg-white d-flex justify-content-center flex-column">
           <div :class="`qrb${ind}`" class="qrb"></div>
-          <span>Login QR code</span>
+          <span class="align-self-center">Login QR code</span>
         </div>
       </div>
       <div class="row justify-content-center pt-1">
-        <h1 class="text-white ext-num">{{ ind }}</h1>
+        <h1 class="text-white ext-num">{{ extensionNumber }}</h1>
       </div>
 
       <div class="row justify-content-center ">
@@ -33,7 +33,7 @@
           </button>
         </div>
         <div class="col-10  text-white d-flex justify-content-between py-1">
-          <span class="text-truncate text align-self-baseline"><small>Password:</small> {{ extension.password }}</span>
+          <span class="text-truncate text align-self-baseline"><small>Password:</small> {{ extension.password | passwordify }}</span>
           <b-button
             variant="outline-light"
             class="align-self-baseline"
@@ -68,6 +68,11 @@ export default {
     new QRCode(document.getElementsByClassName(`qrb${this.ind}`)[0], options);
     document.querySelector(`.qrb${this.ind}`).removeAttribute('title');
     
+  },
+  filters:{
+    passwordify(string){
+      return string.replace(/./g, '•');
+    }
   },
   computed: {
     extensionNumber() {

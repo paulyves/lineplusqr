@@ -3,46 +3,9 @@
     <div class="container ">
       <div class="row">
         <div class="col"></div>
-        <div
-          class="col-auto e border shadow mb-5"
-        >
+        <div class="col-10 col-md-10 col-lg-6 e border shadow mb-5 d-flex flex-column justify-content-between">
           <div class="row">
-            <div class="col-6">
-              <h3 class="mt-4">
-                WARNING: THIS SYSTEM IS FOR AUTHORIZED USERS ONLY
-              </h3>
-              <p>
-                All access, transactions, and files on this PLDT-owned system
-                may be monitored, intercepted, recorded, copied, audited,
-                inspected, and reported to Company authorities by authorized IT
-                Security personnel. Unauthorized access or violations of the
-                terms of use may subject you to administrative disciplinary
-                action and possible criminal prosecution.
-              </p>
-              <p>
-                By pressing 'Login', you acknowledge and agree to the terms and
-                conditions of use stated in the Inter-Company Memorandum No.:
-                005-14: Unified Information Technology (IT) Policies which
-                includes the PROHIBITION of the following: installation of
-                unauthorized connections and devices, violation of software
-                licenses, violation of access rights limitations, leakage of
-                confidential and proprietary data and information, and sharing
-                of user accounts and passwords.
-              </p>
-              <p>
-                * For more information on Inter-Company Memorandum No.: 005-14:
-                Unified Information Technology (IT) Policies, please access
-                <a
-                  class="text-overflow"
-                  href="http://pldtinfocentral/sites/ITSecurity/Policies/Forms/AllPages.aspx"
-                  >http://pldtinfocentral/sites/ITSecurity/Policies/Forms/AllPages.aspx</a
-                >
-              </p>
-              <p>
-                Contact Helpdesk at 620-2700 for further details and inquiries.
-              </p>
-            </div>
-            <div class="col-6">
+            <div class="col-md-12 col-12">
               <div class="row justify-content-center mt-2">
                 <img
                   src="../assets/login_logo.png"
@@ -75,28 +38,41 @@
                     <button
                       type="submit"
                       class="btn btn-primary center"
-                      @click.prevent="login"
+                      @click.prevent="authorize"
+                      v-if="!isLoading"
                     >
                       Login
+                    </button>
+                    <button
+                      v-else
+                      class="btn btn-primary"
+                      type="button"
+                      disabled
+                    >
+                      <span
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Loading...
                     </button>
                   </div>
                 </form>
               </div>
               <div class="row justify-content-center mt-3">
-                <div class="col">
-                  <!-- <div
-                class="alert alert-danger text-center mb-0"
-                role="alert"
-                v-if="getErrorMessage||notif"
-              >{{ getErrorMessage||notif}}</div> -->
+                <div class="col col-10">
+                  <div
+                    class="alert alert-danger text-center mb-0"
+                    role="alert"
+                    v-if="getErrorMessage || notif"
+                  >
+                    {{ getErrorMessage || notif }}
+                  </div>
                 </div>
               </div>
-              <div class="row mt-3">
-                <div class="col"></div>
-              </div>
-              <!-- <small class="float-right mt-4">{{ version }}</small> -->
             </div>
           </div>
+           <small class="align-self-end mb-2">{{ version }}</small>
         </div>
         <div class="col"></div>
       </div>
@@ -106,6 +82,7 @@
 
 <script>
 // const axios = require("axios");
+import { mapActions, mapGetters } from "vuex";
 import PasswordToggle from "../components/PasswordToggle.vue";
 
 export default {
@@ -113,43 +90,57 @@ export default {
   components: {
     PasswordToggle
   },
+  props: ["params"],
   data() {
     return {
       password: "",
       serialNumber: "",
       notif: "",
-      version: process.env.VUE_APP_VERSION
+      version: process.env.VUE_APP_VERSION,
+      isLoading: false
     };
   },
+  computed: {
+    ...mapGetters(["getErrorMessage"])
+  },
   methods: {
-    // ...mapActions("retrieveToken", "addErrorMsg"),
-    login() {
-      this.setSerial();
-      // const data = {
-      //   serial_number: this.serialNumber.toUpperCase(),
-      //   password: this.password
-      // };
-
-      // this.addErrorMsg("");
-      // axios
-      //   .post(process.env.VUE_APP_API_URL+"/login", data)
-      //   .then(response => {
-      //     if (response.data.token) {
-      //       this.retrieveToken(response.data.token);
-      //       this.$router.push({
-      //         path: "home"
-      //       });
-      //     }
-      //   })
-      //   .catch(error => {
-      //     if(error.response.status != 422){
-      //       this.notif = "Invalid credentials";
-      //     }
-      //   });
+    ...mapActions(["login", "addErrorMsg"]),
+    authorize() {
+      // this.setSerial();
+      this.isLoading = true;
+      this.login({ serialNo: this.serialNumber, password: this.password })
+        .then(response => {
+          this.isLoading = false;
+          // console.log(response);
+          if (response.status == 200 && response.data.token) {
+            this.$router.push({
+              name: "home"
+            });
+          }
+        })
+        .catch(error => {
+          this.isLoading = false;
+          this.addErrorMsg(error.response.data.error);
+        });
     },
     setSerial() {
       // this.addErrorMsg("");
       this.changeSerialNumber(this.serialNumber);
+    }
+  },
+  mounted() {
+    if (this.params) {
+      let credentials = this.params.split(":");
+      if (credentials.length == 2) {
+        this.addErrorMsg("");
+        this.serialNumber = credentials[0];
+        this.password = credentials[1];
+        this.authorize();
+      } else {
+        this.$router.push({
+          name: "login"
+        });
+      }
     }
   }
 };
@@ -175,7 +166,7 @@ img {
   width: 150px;
 }
 .e {
-  min-height: 570px;
+  min-height: 580px;
   border-radius: 0.5rem;
 }
 </style>

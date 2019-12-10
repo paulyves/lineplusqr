@@ -3,6 +3,7 @@
     class="mobile custom-height d-flex justify-content-between flex-column"
     :class="[active > 5 ? 'not-ringgroup' : 'in-ringgroup']"
   >
+   <div @click="logout" class="logout-link mr-3 mt-2">Log out</div>
     <div class="container-fluid">
       <swiper
         :options="swiperOption"
@@ -44,6 +45,12 @@ export default {
   methods: {
     currentSlide() {
       this.active = this.$refs.mySwiper.swiper.activeIndex;
+    },
+    logout(){
+      localStorage.removeItem('l_token');
+      this.$router.push({
+            name: "login"
+      });
     }
   },
 
@@ -64,5 +71,13 @@ img {
 }
 .not-ringgroup {
   background-color: #12a74f;
+}
+.logout-link{
+  position: absolute;
+  right: 0;
+  color: white;
+  cursor: pointer;
+  font-weight: 550;
+  z-index: 2;
 }
 </style>
