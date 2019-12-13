@@ -93,5 +93,6 @@ export default {
 }
 .qr img {
   width: 90%;
+  height: 100%
 }
 </style>

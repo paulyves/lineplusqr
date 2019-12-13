@@ -1,11 +1,8 @@
 <template>
   <div class="home">
-    <div @click="logout" class="float-right mt-2 mr-3 d-none d-md-block logout-link">Log out</div>
-    <Qrs :extensions="extensions" class="d-none d-md-block" />
+    <div @click="logout" class="float-right d-none d-md-block logout-link">Log out</div>
+    <Desktop :extensions="extensions" class="d-none d-md-block mt-5" v-if="extensions[0]"/>
     <Mobile :extensions="extensions" class="d-block d-md-none" />
-    <!-- <h1 class="display-4 pt-5 d-none d-md-block" v-if="error">
-      {{ errorMsg }}
-    </h1> -->
     <h2 class="pt-5 d-block d-md-none" v-if="error">{{ errorMsg }}</h2>
   </div>
 </template>
@@ -13,13 +10,12 @@
 <script>
 // @ is an alias to /src
 import { mapActions, mapGetters } from "vuex";
-import Qrs from "@/components/Qrs";
+import Desktop from "@/components/Desktop";
 import Mobile from "@/components/Mobile";
-// import axios from "axios";
 export default {
   name: "home",
   components: {
-    Qrs,
+    Desktop,
     Mobile
   },
   props: ["serial"],
@@ -69,7 +65,7 @@ export default {
     }
   },
   mounted() {
-    // this.getQrs();
+    this.getQrs();
   }
 };
 </script>
@@ -77,5 +73,10 @@ export default {
 .logout-link{
   cursor: pointer;
   font-weight: bold;
+  position: absolute;
+  right: 0;
+  top:0;
+  margin : 20px 20px 0 0;
+  
 }
 </style>

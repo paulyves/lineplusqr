@@ -81,7 +81,6 @@
 </template>
 
 <script>
-// const axios = require("axios");
 import { mapActions, mapGetters } from "vuex";
 import PasswordToggle from "../components/PasswordToggle.vue";
 
@@ -106,12 +105,10 @@ export default {
   methods: {
     ...mapActions(["login", "addErrorMsg"]),
     authorize() {
-      // this.setSerial();
       this.isLoading = true;
       this.login({ serialNo: this.serialNumber, password: this.password })
         .then(response => {
           this.isLoading = false;
-          // console.log(response);
           if (response.status == 200 && response.data.token) {
             this.$router.push({
               name: "home"
@@ -124,7 +121,6 @@ export default {
         });
     },
     setSerial() {
-      // this.addErrorMsg("");
       this.changeSerialNumber(this.serialNumber);
     }
   },
@@ -151,6 +147,7 @@ export default {
   min-height: 100vh;
   background-image: url("~@/assets/login_screen_bg.jpg");
   background-size: cover;
+  
   /* background: url('@assets/login_screen_bg.jpg') */
 }
 
