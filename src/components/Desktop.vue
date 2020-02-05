@@ -50,6 +50,7 @@
                 </div>
                 <div
                   class="copy-block rounded-sm text-secondary d-flex justify-content-center ml-2"
+                  :class="{'not-rg' : active > 5}"
                   @click="doCopy('uname', extensions[active].username)"
                   ref="uname"
                 >
@@ -71,6 +72,7 @@
                 </div>
                 <div
                   class="copy-block rounded-sm text-secondary d-flex justify-content-center ml-2"
+                  :class="{'not-rg' : active > 5}"
                   @click="doCopy('passwd', extensions[active].password)"
                   ref="passwd"
                 >
@@ -153,12 +155,14 @@ export default {
   height: 30px;
   cursor: pointer;
 }
-.copy-block:hover,
-.copy-block:active {
+.copy-block:hover {
   background-color: #b3b3b3;
 }
 .copy-block.active {
-  background-color: #b3b3b3;
+  background-color: #f6d2d6;
+}
+.copy-block.not-rg.active {
+  background-color: #cee9da;
 }
 /* background-color: #b3b3b3; */
 .text-secondary span{
