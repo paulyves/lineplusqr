@@ -159,7 +159,7 @@ export default {
   background-color: #b3b3b3;
 }
 .copy-block.active {
-  background-color: #f6d2d6;
+  background-color: #d2daf1;
 }
 .copy-block.not-rg.active {
   background-color: #cee9da;

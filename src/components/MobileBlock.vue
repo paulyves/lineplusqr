@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-block">
     <div class="row pt-5 justify-content-center">
-      <div class="col-auto text-white">Hub No: {{ extension.number }}</div>
+      <div class="col-auto text-white">Wavephone No: {{ extension.number }}</div>
     </div>
     <div class="row justify-content-center well pt-2">
       <div class="col-8 p-3 rounded bg-white d-flex justify-content-center flex-column">
@@ -41,9 +41,9 @@ export default {
   mounted() {
     let options = {
       text: this.extension.qr,
-      logo: require("@/assets/pldt.png"),
+      logo: require("@/assets/wavephone.png"),
       // colorDark: this.selected == "PLDT" ? "#d32030" : "#0047ba",
-      colorDark: this.ind < 6? "#d32030":"#12a74f",
+      colorDark: this.ind < 4? "#1946b9":"#12a74f",
       width: 350,
       height: 350,
       correctLevel: QRCode.CorrectLevel.H,

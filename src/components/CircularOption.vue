@@ -1,6 +1,6 @@
 <template>
   <div class="circle">
-    <div class="option" @click="toggleStatus" :class="[extensionNum < 6?'ringgroup-cir':'not-ringgroup-cir',{'active':status}]">
+    <div class="option" @click="toggleStatus" :class="[extensionNum < 4?'ringgroup-cir':'not-ringgroup-cir',{'active':status}]">
       {{extensionNum + 12}}
     </div>
   </div>
@@ -35,13 +35,13 @@ export default {
   margin: 0 10px 10px 0px;
 }
 .ringgroup-cir{
-  background-color: #f6d2d6;
+  background-color: #d2daf1;
 }
 .not-ringgroup-cir {
   background-color: #cee9da;
 }
 .ringgroup-cir.active{
-  background-color: #d32030;
+  background-color: #1946b9;
 }
 .not-ringgroup-cir.active{
   background-color: #0c9347;

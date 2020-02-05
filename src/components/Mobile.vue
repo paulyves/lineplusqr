@@ -1,7 +1,7 @@
 <template>
   <div
     class="mobile custom-height d-flex justify-content-between flex-column"
-    :class="[active > 5 ? 'not-ringgroup' : 'in-ringgroup']"
+    :class="[active > 3 ? 'not-ringgroup' : 'in-ringgroup']"
   >
    <div @click="logout" class="logout-link mr-3 mt-2">Log out</div>
     <div class="container-fluid">
@@ -18,7 +18,7 @@
       </swiper>
     </div>
     <div class="container-fluid bg-white">
-      <img src="@/assets/banner.png" alt="banner" />
+      <img src="@/assets/banner.png" alt="banner" class="mt-2" />
     </div>
   </div>
 </template>
@@ -67,7 +67,7 @@ img {
   width: 100%;
 }
 .in-ringgroup {
-  background-color: #d32030;
+  background-color: #1946b9;
 }
 .not-ringgroup {
   background-color: #12a74f;

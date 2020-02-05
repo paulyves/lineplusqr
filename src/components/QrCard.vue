@@ -1,11 +1,11 @@
 <template>
   <div
     class="qr-card"
-    :class="[extensionNum < 6 ? 'ringgroup' : 'not-ringgroup']"
+    :class="[extensionNum < 4 ? 'ringgroup' : 'not-ringgroup']"
   >
     <div class="row justify-content-center">
       <div class="align-self-center py-4 text-white">
-        Hub no: <span class="hub-no">{{hubNum}}</span>
+        Wavephone no: <span class="hub-no">{{hubNum}}</span>
       </div>
     </div>
     <div class="row justify-content-center ">
@@ -33,9 +33,9 @@ export default {
       let options = {
         text: this.qrCode,
         // text: "asasdasdasasdasdas4d1a54sd5as84d89as4dad",
-        logo: require("@/assets/pldt.png"),
+        logo: require("@/assets/wavephone.png"),
         // colorDark: this.selected == "PLDT" ? "#d32030" : "#0047ba",
-        colorDark: this.extensionNum < 6 ? "#d32030" : "#12a74f",
+        colorDark: this.extensionNum < 4 ? "#1946b9" : "#12a74f",
         width: 350,
         height: 350,
         correctLevel: QRCode.CorrectLevel.H,
@@ -83,7 +83,7 @@ export default {
   border-radius: 15px;
 }
 .ringgroup {
-  background-color: #d32030;
+  background-color: #1946b9;
 }
 .not-ringgroup {
   background-color: #0c9347;

@@ -56,8 +56,8 @@ export default {
   mounted() {
     let options = {
       text: this.extension.qr,
-      logo: require("@/assets/pldt.png"),
-      colorDark: this.ind < 6 ? "#d32030" : "#12a74f",
+      logo: require("@/assets/wavephone.png"),
+      colorDark: this.ind < 6 ? "#1946b9" : "#12a74f",
       width: 350,
       height: 350,
       correctLevel: QRCode.CorrectLevel.H,
