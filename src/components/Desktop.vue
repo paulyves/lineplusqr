@@ -10,15 +10,15 @@
                   <img src="@/assets/desktop-banner.png" alt="" srcset="" />
                 </div>
               </div>
-              <div class="row justify-content-center mb-4 mt-5">
+              <div class="row justify-content-center mt-5">
                 <div class="col-10">
-                  <div class="text-muted text-center">
-                    <u>Select Extension Number</u>
+                  <div class="text-muted font-weight-bold">
+                    Select Extension Number
                   </div>
                 </div>
               </div>
               <div class="row justify-content-center ">
-                <div class="container-buttons">
+                <div class="container-buttons pt-2">
                   <div class="row justify-content-center">
                     <CircularOption
                       v-for="(extension, index) in extensions"
@@ -80,7 +80,7 @@
                     src="@/assets/copy.png"
                     alt=""
                     srcset=""
-                    class="align-self-center"
+                    class="align-self-center "
                   />
                 </div>
               </div>
@@ -115,11 +115,19 @@ export default {
     }
   },
   methods: {
+    
     setActive(extension) {
       this.refreshBtns();
       this.active = extension;
     },
+    /**
+     * Called by click event in copy icon button.
+     * @params {string, string} 
+     * ref = vue props ref
+     * string = string to be copied
+     */
     doCopy(ref, string) {
+      /** vue clipboard copy function */
       this.$copyText(string).then(
         () => {
           this.refreshBtns();
@@ -130,6 +138,9 @@ export default {
         }
       );
     },
+    /**
+     * remove active class (hightlight for copy button)
+     */
     refreshBtns() {
       let buttons = document.querySelectorAll(".copy-block");
       buttons.forEach(element => {
@@ -142,7 +153,8 @@ export default {
 
 <style scoped>
 .container-buttons {
-  width: 200px;
+  width: 350px;
+  border-top: 1px solid #b3b3b3;
 }
 .input-grey {
   background-color: #e6e6e6;
@@ -169,4 +181,8 @@ export default {
   padding-left: 15px;
   font-size: 0.95rem;
 }
+.text-muted{
+  color: #b3b3b3 !important; 
+}
+
 </style>

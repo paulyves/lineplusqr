@@ -3,22 +3,41 @@
     class="qr-card"
     :class="[extensionNum < 4 ? 'ringgroup' : 'not-ringgroup']"
   >
-    <div class="row justify-content-center">
-      <div class="align-self-center py-4 text-white">
-        Wavephone no: <span class="hub-no">{{hubNum}}</span>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="align-self-center pt-4 pb-2 text-white">
+          <small class="font-weight-bold">Wavephone No: </small>
+          <span class="hub-no">{{ hubNum }}</span>
+        </div>
       </div>
-    </div>
-    <div class="row justify-content-center ">
-      <div class="qr-bg d-flex flex-column">
-        <div :class="`qcode${extensionNum}`" class="qrc"></div>
-        <small class="align-self-center">Login QR code</small>
+      <div class="row justify-content-center ">
+        <div class="qr-bg d-flex flex-column">
+          <div :class="`qcode${extensionNum}`" class="qrc"></div>
+          <small class="align-self-center">Login QR code</small>
+        </div>
       </div>
-    </div>
-    <div class="row justify-content-center">
-      <span class="extension-text">{{ extensionNumber }}</span>
-    </div>
-    <div class="row justify-content-center">
-      <span class="extension-label">Extension Number</span>
+      <div class="row justify-content-center">
+        <span class="extension-text mt-2">{{ extensionNumber }}</span>
+      </div>
+      <div class="row justify-content-center">
+        <span class="extension-label mb-2">Extension Number</span>
+      </div>
+      <div class="row">
+        <div class="reg-col">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-auto mt-3">
+                <h5 class="text-white font-weight-bold mb-0">Device: {{ 'IPHONE' }}</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-auto">
+                <small class="text-white">Registration Date: </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -27,14 +46,12 @@
 const QRCode = require("easyqrcodejs");
 export default {
   name: "qr-card",
-  props: ["extensionNum", "hubNum", "qrCode","username"],
+  props: ["extensionNum", "hubNum", "qrCode", "username"],
   methods: {
     createQr() {
       let options = {
         text: this.qrCode,
-        // text: "asasdasdasasdasdas4d1a54sd5as84d89as4dad",
         logo: require("@/assets/wavephone.png"),
-        // colorDark: this.selected == "PLDT" ? "#d32030" : "#0047ba",
         colorDark: this.extensionNum < 4 ? "#1946b9" : "#12a74f",
         width: 350,
         height: 350,
@@ -52,15 +69,15 @@ export default {
         .removeAttribute("title");
     }
   },
-  mounted(){
+  mounted() {
     this.createQr();
   },
-  updated(){
+  updated() {
     document.getElementsByClassName("qrc")[0].innerHTML = "";
     this.createQr();
   },
-  computed : {
-    extensionNumber(){
+  computed: {
+    extensionNumber() {
       return this.username.slice(-2);
     }
   }
@@ -95,17 +112,22 @@ export default {
   border-radius: 8px;
 }
 .extension-text {
-  font-size: 4.5rem;
-  margin-top: 45px;
+  font-size: 4rem;
   color: white;
   font-weight: bold;
-  line-height: 1;
+  line-height: .9;
 }
 .extension-label {
   font-size: 1rem;
   color: white;
 }
-.hub-no{
+.hub-no {
   font-size: 20px;
+}
+.reg-col {
+  height: 96px;
+  width: 297px;
+  background: #231f20;
+  border-radius: 0 0 8px 8px;
 }
 </style>
