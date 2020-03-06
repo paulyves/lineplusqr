@@ -41,7 +41,9 @@ export default {
               number: hub,
               username: extension.username,
               password: extension.password,
-              qr: `csc:${extension.username}:${extension.password}@${process.env.VUE_APP_QR_PREFIX}`
+              act_date: extension.act_date,
+              device: extension.device,
+              qr: `csc:${extension.username}:${extension.password}@${process.env.VUE_APP_QR_PREFIX}`,
             });
           });
         })

@@ -3,7 +3,7 @@
     class="mobile custom-height d-flex justify-content-between flex-column"
     :class="[active > 3 ? 'not-ringgroup' : 'in-ringgroup']"
   >
-   <div @click="logout" class="logout-link mr-3 mt-2">Log out</div>
+    <div @click="logout" class="logout-link mr-3 mt-2">Log out</div>
     <div class="container-fluid">
       <swiper
         :options="swiperOption"
@@ -11,14 +11,36 @@
         @slideChange="currentSlide"
       >
         <swiper-slide v-for="(extension, index) in extensions" :key="index">
-          <MobileBlock :extension="extension" :ind="index" />
+          <MobileBlock :extension="extension" :ind="index" :isActive="index==active" :isReg ="extension.act_date" />
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div>
-    <div class="container-fluid bg-white">
-      <img src="@/assets/banner.png" alt="banner" class="mt-2" />
+    <div class="reg-con container">
+      <div class="row">
+        <div class="col-auto mt-3">
+          <h5
+            class="text-white font-weight-bold mb-0 text-truncate"
+            style="width:265px"
+            
+          >
+            Device: {{ getDeviceInfo }}
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-auto">
+          <small class="text-white" >Registration Date: {{ getRegDate }} </small>
+        </div>
+      </div>
+      <img
+        src="@/assets/no_incoming_call.png"
+        alt="no incoming call"
+        srcset=""
+        class="no-incoming-call-m"
+        :class="{ 'd-none': active < 4 }"
+      />
     </div>
   </div>
 </template>
@@ -42,26 +64,44 @@ export default {
       active: 0
     };
   },
+  computed:{
+    getDeviceInfo(){
+      if(this.extensions[this.active]){
+        return this.extensions[this.active].device;
+      }
+      return "";
+    },
+    getRegDate(){
+       if(this.extensions[this.active]){
+        return this.extensions[this.active].act_date;
+      }
+      return "";
+    },
+  },
+  mounted(){
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  },
   methods: {
     currentSlide() {
       this.active = this.$refs.mySwiper.swiper.activeIndex;
     },
-    logout(){
-      localStorage.removeItem('l_token');
+    logout() {
+      localStorage.removeItem("l_token");
       this.$router.push({
-            name: "login"
+        name: "login"
       });
     }
-  },
-
+  }
 };
 </script>
 
 <style scoped>
-
 .custom-height {
-  height: 90vh;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
+  
 }
 img {
   width: 100%;
@@ -72,12 +112,24 @@ img {
 .not-ringgroup {
   background-color: #12a74f;
 }
-.logout-link{
+.logout-link {
   position: absolute;
   right: 0;
   color: white;
   cursor: pointer;
   font-weight: 550;
   z-index: 2;
+}
+.reg-con {
+  background: #231f20;
+  height: 150px;
+  position: relative;
+}
+.no-incoming-call-m {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  height: 150px;
+  width: 150px;
 }
 </style>

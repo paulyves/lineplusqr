@@ -3,7 +3,7 @@
     class="qr-card"
     :class="[extensionNum < 4 ? 'ringgroup' : 'not-ringgroup']"
   >
-    <div class="container-fluid">
+    <div class="container-fluid position-rel">
       <div class="row justify-content-center">
         <div class="align-self-center pt-4 pb-2 text-white">
           <small class="font-weight-bold">Wavephone No: </small>
@@ -13,9 +13,17 @@
       <div class="row justify-content-center ">
         <div class="qr-bg d-flex flex-column">
           <div :class="`qcode${extensionNum}`" class="qrc"></div>
+          <div
+            class="loading-container justify-content-center align-items-center d-none"
+          >
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
           <small class="align-self-center">Login QR code</small>
         </div>
       </div>
+      <img src="@/assets/no_incoming_call.png" class="no-incoming-call" :class="{'d-none':extensionNum < 4}" alt="No incoming call">
       <div class="row justify-content-center">
         <span class="extension-text mt-2">{{ extensionNumber }}</span>
       </div>
@@ -27,12 +35,14 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col-auto mt-3">
-                <h5 class="text-white font-weight-bold mb-0">Device: {{ 'IPHONE' }}</h5>
+                <h5 class="text-white font-weight-bold mb-0 text-truncate" style="width:265px">
+                  Device: {{ device }}
+                </h5>
               </div>
             </div>
             <div class="row">
               <div class="col-auto">
-                <small class="text-white">Registration Date: </small>
+                <small class="text-white">Registration Date: {{regDate}} </small>
               </div>
             </div>
           </div>
@@ -46,7 +56,7 @@
 const QRCode = require("easyqrcodejs");
 export default {
   name: "qr-card",
-  props: ["extensionNum", "hubNum", "qrCode", "username"],
+  props: ["extensionNum", "hubNum", "qrCode", "username","device","regDate"],
   methods: {
     createQr() {
       let options = {
@@ -74,7 +84,18 @@ export default {
   },
   updated() {
     document.getElementsByClassName("qrc")[0].innerHTML = "";
+    document.getElementsByClassName("qrc")[0].classList.add("d-none");
+
+    document
+      .getElementsByClassName("loading-container")[0]
+      .classList.replace("d-none", "d-flex");
     this.createQr();
+    setTimeout(() => {
+      document.getElementsByClassName("qrc")[0].classList.remove("d-none");
+      document
+        .getElementsByClassName("loading-container")[0]
+        .classList.replace("d-flex", "d-none");
+    }, 400);
   },
   computed: {
     extensionNumber() {
@@ -86,8 +107,8 @@ export default {
 
 <style>
 .qrc > img {
-  width: 90%;
-  height: 100%;
+  width: 180px;
+  height: 160px;
 }
 .qrc {
   display: flex;
@@ -115,7 +136,7 @@ export default {
   font-size: 4rem;
   color: white;
   font-weight: bold;
-  line-height: .9;
+  line-height: 0.9;
 }
 .extension-label {
   font-size: 1rem;
@@ -129,5 +150,19 @@ export default {
   width: 297px;
   background: #231f20;
   border-radius: 0 0 8px 8px;
+}
+.loading-container {
+  height: 180px;
+  width: 200px;
+}
+.no-incoming-call{
+  right: 0;
+  top: 215px;
+  position: absolute;
+  height: 150px;
+  width: 150px;
+}
+.position-rel{
+  position: relative;
 }
 </style>

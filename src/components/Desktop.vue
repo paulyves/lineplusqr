@@ -10,9 +10,9 @@
                   <img src="@/assets/desktop-banner.png" alt="" srcset="" />
                 </div>
               </div>
-              <div class="row justify-content-center mt-5">
-                <div class="col-10">
-                  <div class="text-muted font-weight-bold">
+              <div class="row justify-content-center mt-4">
+                <div class="col-10 px-4">
+                  <div class="text-muted font-weight-bold pl-2">
                     Select Extension Number
                   </div>
                 </div>
@@ -25,6 +25,7 @@
                       :key="index"
                       :extensionNum="index"
                       :status="active == index"
+                      :isReg ="extension.act_date"
                       @setActive="setActive"
                     />
                   </div>
@@ -37,6 +38,8 @@
                 :qrCode="extensions[active].qr"
                 :hubNum="extensions[active].number"
                 :username="extensions[active].username"
+                :regDate="extensions[active].act_date"
+                :device="extensions[active].device"
               />
             </div>
           </div>
@@ -64,7 +67,7 @@
               </div>
             </div>
           </div>
-          <div class="row mt-2">
+          <div class="row mt-2 mb-4">
             <div class="col-6 offset-6">
               <div class="row pl-3">
                 <div class="input-grey rounded-sm text-secondary ">
