@@ -1,6 +1,6 @@
 <template>
   <div class="circle">
-    <div class="option" @click="toggleStatus" :class="[extensionNum < 6?'ringgroup-cir':'not-ringgroup-cir',{'active':status}]">
+    <div class="option" @click="toggleStatus" :class="[extensionNum < 5?'ringgroup-cir':'not-ringgroup-cir',{'active':status}]">
       {{extensionNum + 12}}
     </div>
   </div>

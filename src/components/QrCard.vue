@@ -1,7 +1,7 @@
 <template>
   <div
     class="qr-card"
-    :class="[extensionNum < 6 ? 'ringgroup' : 'not-ringgroup']"
+    :class="[extensionNum < 5 ? 'ringgroup' : 'not-ringgroup']"
   >
     <div class="row justify-content-center">
       <div class="align-self-center py-4 text-white">
@@ -35,7 +35,7 @@ export default {
         // text: "asasdasdasasdasdas4d1a54sd5as84d89as4dad",
         logo: require("@/assets/pldt.png"),
         // colorDark: this.selected == "PLDT" ? "#d32030" : "#0047ba",
-        colorDark: this.extensionNum < 6 ? "#d32030" : "#12a74f",
+        colorDark: this.extensionNum < 5 ? "#d32030" : "#12a74f",
         width: 350,
         height: 350,
         correctLevel: QRCode.CorrectLevel.H,

@@ -57,7 +57,7 @@ export default {
     let options = {
       text: this.extension.qr,
       logo: require("@/assets/pldt.png"),
-      colorDark: this.ind < 6 ? "#d32030" : "#12a74f",
+      colorDark: this.ind < 5 ? "#d32030" : "#12a74f",
       width: 350,
       height: 350,
       correctLevel: QRCode.CorrectLevel.H,
