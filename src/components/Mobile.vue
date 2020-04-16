@@ -1,7 +1,7 @@
 <template>
   <div
     class="mobile custom-height d-flex justify-content-between flex-column"
-    :class="[active > 3 ? 'not-ringgroup' : 'in-ringgroup']"
+    :class="[active > getNumOfRg - 1 ? 'not-ringgroup' : 'in-ringgroup']"
   >
     <div @click="logout" class="logout-link mr-3 mt-2">Log out</div>
     <div class="container-fluid">
@@ -39,7 +39,7 @@
         alt="no incoming call"
         srcset=""
         class="no-incoming-call-m"
-        :class="{ 'd-none': active < 4 }"
+        :class="{ 'd-none': active < getNumOfRg }"
       />
     </div>
   </div>
@@ -77,6 +77,9 @@ export default {
       }
       return "";
     },
+    getNumOfRg(){
+      return parseInt(process.env.VUE_APP_NUM_OF_RG)
+    }
   },
   mounted(){
     let vh = window.innerHeight * 0.01;

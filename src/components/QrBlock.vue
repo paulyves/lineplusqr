@@ -57,7 +57,7 @@ export default {
     let options = {
       text: this.extension.qr,
       logo: require("@/assets/wavephone.png"),
-      colorDark: this.ind < 6 ? "#1946b9" : "#12a74f",
+      colorDark: this.ind < this.getNumOfRg + 2 ? "#1946b9" : "#12a74f",
       width: 350,
       height: 350,
       correctLevel: QRCode.CorrectLevel.H,
@@ -77,6 +77,9 @@ export default {
   computed: {
     extensionNumber() {
       return this.extension.username.slice(-2);
+    },
+    getNumOfRg(){
+      return parseInt(process.env.VUE_APP_NUM_OF_RG)
     }
   },
   methods : {

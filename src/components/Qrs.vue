@@ -8,7 +8,7 @@
             :key="index"
             :ind="index"
             :extension="extension"
-            :isRingGroup="index < 6"
+            :isRingGroup="index < getNumOfRg + 2"
           />
         </div>
       </div>
@@ -37,6 +37,11 @@ export default {
       },
       active: 0
     };
+  },
+  computed:{
+    getNumOfRg(){
+      return parseInt(process.env.VUE_APP_NUM_OF_RG)
+    }
   },
   methods: {
     currentSlide() {

@@ -9,7 +9,7 @@
       @mouseover="hover = true"
       @mouseleave="hover = false"
       :class="[
-        extensionNum < 4 ? 'ringgroup-cir' : 'not-ringgroup-cir',
+        extensionNum < getNumOfRg ? 'ringgroup-cir' : 'not-ringgroup-cir',
         { active: status || hover }
       ]"
     >
@@ -25,6 +25,11 @@ export default {
   data(){
     return {
       hover: false
+    }
+  },
+  computed:{
+    getNumOfRg(){
+      return parseInt(process.env.VUE_APP_NUM_OF_RG)
     }
   },
   methods: {

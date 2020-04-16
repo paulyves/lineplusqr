@@ -53,7 +53,7 @@
                 </div>
                 <div
                   class="copy-block rounded-sm text-secondary d-flex justify-content-center ml-2"
-                  :class="{'not-rg' : active > 5}"
+                  :class="{'not-rg' : active > getNumOfRg + 1}"
                   @click="doCopy('uname', extensions[active].username)"
                   ref="uname"
                 >
@@ -75,7 +75,7 @@
                 </div>
                 <div
                   class="copy-block rounded-sm text-secondary d-flex justify-content-center ml-2"
-                  :class="{'not-rg' : active > 5}"
+                  :class="{'not-rg' : active > getNumOfRg + 1}"
                   @click="doCopy('passwd', extensions[active].password)"
                   ref="passwd"
                 >
@@ -115,6 +115,9 @@ export default {
     },
     password() {
       return this.extensions[this.active].password.replace(/./g, "•");
+    },
+    getNumOfRg(){
+      return parseInt(process.env.VUE_APP_NUM_OF_RG)
     }
   },
   methods: {

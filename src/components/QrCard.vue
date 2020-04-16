@@ -1,7 +1,7 @@
 <template>
   <div
     class="qr-card"
-    :class="[extensionNum < 4 ? 'ringgroup' : 'not-ringgroup']"
+    :class="[extensionNum < getNumOfRg ? 'ringgroup' : 'not-ringgroup']"
   >
     <div class="container-fluid position-rel">
       <div class="row justify-content-center">
@@ -23,7 +23,7 @@
           <small class="align-self-center">Login QR code</small>
         </div>
       </div>
-      <img src="@/assets/no_incoming_call.png" class="no-incoming-call" :class="{'d-none':extensionNum < 4}" alt="No incoming call">
+      <img src="@/assets/no_incoming_call.png" class="no-incoming-call" :class="{'d-none':extensionNum < getNumOfRg}" alt="No incoming call">
       <div class="row justify-content-center">
         <span class="extension-text mt-2">{{ extensionNumber }}</span>
       </div>
@@ -62,7 +62,7 @@ export default {
       let options = {
         text: this.qrCode,
         logo: require("@/assets/wavephone.png"),
-        colorDark: this.extensionNum < 4 ? "#1946b9" : "#12a74f",
+        colorDark: this.extensionNum < this.getNumOfRg ? "#1946b9" : "#12a74f",
         width: 350,
         height: 350,
         correctLevel: QRCode.CorrectLevel.H,
@@ -100,6 +100,9 @@ export default {
   computed: {
     extensionNumber() {
       return this.username.slice(-2);
+    },
+    getNumOfRg(){
+      return parseInt(process.env.VUE_APP_NUM_OF_RG)
     }
   }
 };
