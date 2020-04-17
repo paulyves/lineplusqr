@@ -57,18 +57,21 @@ export default {
   position: relative;
 }
 .ringgroup-cir {
-  background-color: #d2daf1;
+  background-color: #eea9ae;
+  /* background-color: #d2daf1; */
 }
 .not-ringgroup-cir {
   background-color: #cee9da;
 }
 .ringgroup-cir.active {
-  background-color: #1946b9;
-  border: 3px solid black;
+  background-color: #d22030;
+  /* background-color: #1946b9; */
+  /* border: 3px solid black; */
+  border: 3px solid #98101c;
 }
 .not-ringgroup-cir.active {
   background-color: #0c9347;
-  border: 3px solid #231f20;
+  border: 3px solid #0a7e3c;
 }
 
 /* badge */

@@ -110,7 +110,8 @@ img {
   width: 100%;
 }
 .in-ringgroup {
-  background-color: #1946b9;
+  background-color: #d32030;
+  /* background-color: #1946b9; */
 }
 .not-ringgroup {
   background-color: #12a74f;

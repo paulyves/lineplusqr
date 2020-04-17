@@ -68,7 +68,7 @@ export default {
       text: this.extension.qr,
       logo: require("@/assets/wavephone.png"),
       // colorDark: this.selected == "PLDT" ? "#d32030" : "#0047ba",
-      colorDark: this.ind < this.getNumOfRg ? "#1946b9" : "#12a74f",
+      colorDark: this.ind < this.getNumOfRg ? "#d32030" : "#12a74f",
       width: 350,
       height: 350,
       correctLevel: QRCode.CorrectLevel.H,
