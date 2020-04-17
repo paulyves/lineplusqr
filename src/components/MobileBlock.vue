@@ -66,7 +66,7 @@ export default {
   mounted() {
     let options = {
       text: this.extension.qr,
-      logo: require("@/assets/wavephone.png"),
+      logo: require("@/assets/pldt.png"),
       // colorDark: this.selected == "PLDT" ? "#d32030" : "#0047ba",
       colorDark: this.ind < this.getNumOfRg ? "#d32030" : "#12a74f",
       width: 350,
