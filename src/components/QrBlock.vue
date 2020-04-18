@@ -11,6 +11,7 @@
         <div class="col-auto text-white pl-0">{{ extension.number }}</div>
       </div>
       <div class="row justify-content-center well pt-1">
+        <div class="lock-container"></div>
         <div class="col-auto p-3 rounded bg-white d-flex justify-content-center flex-column">
           <div :class="`qrb${ind}`" class="qrb"></div>
           <span class="align-self-center">Login QR code</span>

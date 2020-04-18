@@ -6,12 +6,15 @@
     <div class="container-fluid position-rel">
       <div class="row justify-content-center">
         <div class="align-self-center pt-4 pb-2 text-white">
-          <small class="font-weight-bold">Wavephone No: </small>
+          Hub no: 
           <span class="hub-no">{{ hubNum }}</span>
         </div>
       </div>
       <div class="row justify-content-center ">
-        <div class="qr-bg d-flex flex-column">
+        <div class="qr-bg d-flex flex-column position-rel">
+          <div class="lock-container">
+            <img src="@/assets/qr_portal_unlock.svg"  class="locked-icon" alt="locked icon">
+          </div>
           <div :class="`qcode${extensionNum}`" class="qrc"></div>
           <div
             class="loading-container justify-content-center align-items-center d-none"
@@ -25,24 +28,29 @@
       </div>
       <img src="@/assets/no_incoming_call.png" class="no-incoming-call" :class="{'d-none':extensionNum < getNumOfRg}" alt="No incoming call">
       <div class="row justify-content-center">
-        <span class="extension-text mt-2">{{ extensionNumber }}</span>
+        <span class="extension-text" :class="[device.length == 0 ? 'mt-4': 'mt-2']">{{ extensionNumber }}</span>
       </div>
       <div class="row justify-content-center">
         <span class="extension-label mb-2">Extension Number</span>
       </div>
-      <div class="row">
+      <div class="row " :class="{'d-none' : device.length == 0}">
         <div class="reg-col">
           <div class="container-fluid">
-            <div class="row">
-              <div class="col-auto mt-3">
-                <h5 class="text-white font-weight-bold mb-0 text-truncate" style="width:265px">
-                  Device: {{ device }}
-                </h5>
+            <div class="row justify-content-center mt-2">
+              <div class="col-auto">
+                <span class="text-white text-center">LAST REGISTERED ON</span>
               </div>
             </div>
             <div class="row">
+              <div class="col-auto ">
+                <p class="text-white reg-dev-text text-center font-weight-bold mb-0 text-truncate" style="width:265px">
+                  {{ device }}
+                </p>
+              </div>
+            </div>
+            <div class="row justify-content-center">
               <div class="col-auto">
-                <small class="text-white">Registration Date: {{regDate}} </small>
+                <p class="text-white text-center"><small >Registration Date: {{regDate}} </small></p>
               </div>
             </div>
           </div>
@@ -61,7 +69,7 @@ export default {
     createQr() {
       let options = {
         text: this.qrCode,
-        logo: require("@/assets/wavephone.png"),
+        logo: require("@/assets/pldt.png"),
         colorDark: this.extensionNum < this.getNumOfRg ? "#d32030" : "#12a74f",
         width: 350,
         height: 350,
@@ -110,12 +118,14 @@ export default {
 
 <style>
 .qrc > img {
-  width: 180px;
-  height: 160px;
+  width: 170px;
+  height: 150px;
 }
 .qrc {
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-top: 10px;
   padding: 10px;
 }
 .qr-card {
@@ -132,7 +142,7 @@ export default {
 }
 .qr-bg {
   height: 205px;
-  width: 200px;
+  width: 220px;
   background-color: white;
   border-radius: 8px;
 }
@@ -165,8 +175,37 @@ export default {
   position: absolute;
   height: 150px;
   width: 150px;
+  transition-duration: .3s;
 }
 .position-rel{
   position: relative;
+}
+.reg-dev-text{
+  font-size: 1.2rem;
+}
+.lock-container{
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  background: #231f20;
+  top: -20px;
+  right: -20px;
+  border-radius: 25px;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.locked-icon{
+  height: 65%;
+  width: 65%;
+}
+.lock-container:hover{
+  background: #141213;
+  border: 1px solid #141213;
+}
+.no-incoming-call:hover{
+  opacity: 0;
 }
 </style>
