@@ -40,6 +40,8 @@
                 :username="extensions[active].username"
                 :regDate="extensions[active].act_date"
                 :device="extensions[active].device"
+                :isLocked="extensions[active].isLocked"
+                @toggleLock="toggleLock"
               />
             </div>
           </div>
@@ -125,6 +127,9 @@ export default {
     setActive(extension) {
       this.refreshBtns();
       this.active = extension;
+    },
+    toggleLock(data){
+      this.$emit('toggleLock',data)
     },
     /**
      * Called by click event in copy icon button.

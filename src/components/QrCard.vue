@@ -12,13 +12,12 @@
       </div>
       <div class="row justify-content-center ">
         <div class="qr-bg d-flex flex-column position-rel">
-          <div class="lock-container">
-            <img src="@/assets/qr_portal_unlock.svg"  class="locked-icon" alt="locked icon">
+          <div class="lock-container" :class="{'locked': isLocked}" @click="toggleLock" @mouseenter="changeImgOnHover" @mouseleave="retainCurrentImg">
+            <img :src="getImgPath()" class="locked-icon">
           </div>
           <div :class="`qcode${extensionNum}`" class="qrc"></div>
           <div
-            class="loading-container justify-content-center align-items-center d-none"
-          >
+            class="loading-container justify-content-center align-items-center d-none">
             <div class="spinner-border" role="status">
               <span class="sr-only">Loading...</span>
             </div>
@@ -26,7 +25,7 @@
           <small class="align-self-center">Login QR code</small>
         </div>
       </div>
-      <img src="@/assets/no_incoming_call.png" class="no-incoming-call" :class="{'d-none':extensionNum < getNumOfRg}" alt="No incoming call">
+      <img src="@/assets/no_incoming_call.png" class="no-incoming-call" :class="[{'d-none':extensionNum < getNumOfRg},{'lowered':device.length == 0}]" alt="No incoming call">
       <div class="row justify-content-center">
         <span class="extension-text" :class="[device.length == 0 ? 'mt-4': 'mt-2']">{{ extensionNumber }}</span>
       </div>
@@ -38,7 +37,7 @@
           <div class="container-fluid">
             <div class="row justify-content-center mt-2">
               <div class="col-auto">
-                <span class="text-white text-center">LAST REGISTERED ON</span>
+                <span class="text-white text-center">LAST REGISTERED ON </span>
               </div>
             </div>
             <div class="row">
@@ -64,7 +63,24 @@
 const QRCode = require("easyqrcodejs");
 export default {
   name: "qr-card",
-  props: ["extensionNum", "hubNum", "qrCode", "username","device","regDate"],
+  // props: ["extensionNum", "hubNum", "qrCode", "username","device","regDate"],
+  props : {
+    extensionNum : Number,
+    hubNum : String,
+    qrCode : String,
+    username : String,
+    device : String,
+    regDate : String,
+    isLocked : {
+      type: Boolean,
+      default : false
+    }
+  },
+  data(){
+    return{
+      imgPath : "qr_portal_unlock.svg"
+    }
+  },
   methods: {
     createQr() {
       let options = {
@@ -85,6 +101,21 @@ export default {
       document
         .querySelector(`.qcode${this.extensionNum}`)
         .removeAttribute("title");
+    },
+    toggleLock(){
+      this.$emit('toggleLock',{extensionNum: this.extensionNum, isLocked: !this.isLocked})
+    },
+    getImgPath(){
+      this.imgPath = this.isLocked? "qr_portal_locked.svg": "qr_portal_unlock.svg";
+      return  require("@/assets/"+ this.imgPath);
+    },
+    changeImgOnHover(event){
+      let tempImg = this.isLocked? "qr_portal_unlock.svg":"qr_portal_locked.svg";
+      event.target.children[0].src = require("@/assets/"+ tempImg);
+    },
+    retainCurrentImg(event){
+      let tempImg = this.isLocked? "qr_portal_locked.svg": "qr_portal_unlock.svg";
+      event.target.children[0].src = require("@/assets/"+ tempImg);
     }
   },
   mounted() {
@@ -93,7 +124,6 @@ export default {
   updated() {
     document.getElementsByClassName("qrc")[0].innerHTML = "";
     document.getElementsByClassName("qrc")[0].classList.add("d-none");
-
     document
       .getElementsByClassName("loading-container")[0]
       .classList.replace("d-none", "d-flex");
@@ -119,14 +149,14 @@ export default {
 <style>
 .qrc > img {
   width: 170px;
-  height: 150px;
+  height: 160px;
 }
 .qrc {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-  padding: 10px;
+  padding: 10px 10px 5px 10px;
 }
 .qr-card {
   height: 459px;
@@ -163,11 +193,15 @@ export default {
   height: 96px;
   width: 297px;
   background: #231f20;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 15px 15px;
+}
+.lowered{
+  top: 309px !important;
+  border-radius: 0 0 15px 0;
 }
 .loading-container {
-  height: 180px;
-  width: 200px;
+  height: 100%;
+  width: 100%;
 }
 .no-incoming-call{
   right: 0;
@@ -191,20 +225,30 @@ export default {
   background: #231f20;
   top: -20px;
   right: -20px;
-  border-radius: 25px;
+  border-radius: 50%;
   border: 1px solid white;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition-duration: .3s;
+}
+.locked:hover{
+  opacity: 1;
+}
+.locked{
+  height: 100% !important;
+  width:100% !important;
+  border-radius: 8px !important;
+  top: 0 !important;
+  right: 0 !important;
+  opacity: 0.9;
 }
 .locked-icon{
   height: 65%;
   width: 65%;
+  transition-duration: .3s;
 }
-.lock-container:hover{
-  background: #141213;
-  border: 1px solid #141213;
-}
+
 .no-incoming-call:hover{
   opacity: 0;
 }

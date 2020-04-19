@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div @click="logout" class="float-right d-none d-md-block logout-link">Log out</div>
-    <Desktop :extensions="extensions" class="d-none d-md-block mt-5" v-if="extensions[0]"/>
+    <Desktop :extensions="extensions" class="d-none d-md-block mt-5" v-if="extensions[0]" @toggleLock="toggleLock"/>
     <Mobile :extensions="extensions" class="d-block d-md-none" />
     <h2 class="pt-5 d-block d-md-none" v-if="error">{{ errorMsg }}</h2>
   </div>
@@ -23,7 +23,8 @@ export default {
     return {
       extensions: [],
       error: true,
-      errorMsg: ""
+      errorMsg: "",
+      toLock: true
     };
   },
  computed: {
@@ -44,6 +45,7 @@ export default {
               act_date: extension.act_date,
               device: extension.device,
               qr: `csc:${extension.username}:${extension.password}@${process.env.VUE_APP_QR_PREFIX}`,
+              isLocked : extension.is_locked
             });
           });
         })
@@ -59,8 +61,27 @@ export default {
           });
         });
     },
+    toggleLock(data){
+      let str = data.isLocked?"By locking this QR code, you will not be able to register a mobile phone using this QR code." :"By unlocking this QR code, you will be able to use it to register a new mobile phone. Previous registrations will be invalidated."
+      this.$bvModal.msgBoxConfirm(str,{
+        okVariant: 'success',
+        okTitle: 'Continue',
+        cancelTitle: 'Cancel',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      })
+          .then(value => {
+            if(value)
+              this.extensions[data.extensionNum].isLocked = data.isLocked;
+          })
+          .catch((  ) => {
+            // An error occurred
+          })
+    },
     logout(){
       localStorage.removeItem('l_token');
+      this.addErrorMsg(null);
       this.$router.push({
             name: "login"
       });
