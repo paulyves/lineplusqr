@@ -38,6 +38,19 @@ const actions = {
       });
     });
   },
+  updateLockedStatus({state},obj){
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + state.token;
+    return new Promise(function(resolve,reject){
+      axios
+      .put(process.env.VUE_APP_API_URL+"/account/lock",{uname: obj.uname,isLocked:obj.isLocked})
+      .then(response => {
+        resolve(response)
+      })
+      .catch(error =>{
+        reject(error)
+      });
+    });
+  },
   // logoutUser({commit,state}){
   //     localStorage.removeItem('l_token');
   //     commit("removeToken");

@@ -31,7 +31,7 @@ export default {
     ...mapGetters(["allExtensions"])
   },
   methods: {
-    ...mapActions(["postQrs","addErrorMsg"]),
+    ...mapActions(["postQrs","addErrorMsg","updateLockedStatus"]),
     getQrs() {
       this.postQrs()
         .then(response => {
@@ -72,8 +72,14 @@ export default {
         centered: true
       })
           .then(value => {
-            if(value)
-              this.extensions[data.extensionNum].isLocked = data.isLocked;
+            if(value){
+              this.updateLockedStatus({uname:this.extensions[data.extensionNum].username,isLocked:data.isLocked})
+                .then(res=>{
+                  if(res.data == 'success'){
+                    this.extensions[data.extensionNum].isLocked = data.isLocked;
+                  }
+                })
+            }
           })
           .catch((  ) => {
             // An error occurred
