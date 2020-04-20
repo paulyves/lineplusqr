@@ -18,23 +18,28 @@
       </swiper>
     </div>
     <div class="reg-con container">
-      <div class="row">
-        <div class="col-auto mt-3">
-          <h5
-            class="text-white font-weight-bold mb-0 text-truncate"
-            style="width:265px"
-            
-          >
-            Device: {{ getDeviceInfo }}
-          </h5>
-        </div>
+      <div class="row " :class="{'d-none' : getDeviceInfo.length == 0}">
+        <!-- <div class="reg-col"> -->
+          <div class="container-fluid">
+            <div class="row justify-content-center mt-2">
+              <div class="col-auto">
+                <span class="text-white text-center">LAST REGISTERED ON </span>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+                <p class="text-white reg-dev-text text-center font-weight-bold mb-0 text-truncate" style="width:265px">
+                  {{ getDeviceInfo }}
+                </p>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <p class="text-white text-center"><small >Registration Date: {{getRegDate}} </small></p>
+              </div>
+            </div>
+          </div>
+        <!-- </div> -->
       </div>
-      <div class="row">
-        <div class="col-auto">
-          <small class="text-white" >Registration Date: {{ getRegDate }} </small>
-        </div>
-      </div>
-      <img
+       <img
         src="@/assets/no_incoming_call.png"
         alt="no incoming call"
         srcset=""

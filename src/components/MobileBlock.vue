@@ -2,7 +2,7 @@
   <div class="mobile-block">
     <div class="row pt-5 justify-content-center">
       <div class="col-auto text-white">
-        Wavephone No: {{ extension.number }}
+        Hub No: {{ extension.number }}
       </div>
     </div>
     <div class="row justify-content-center well pt-2">
