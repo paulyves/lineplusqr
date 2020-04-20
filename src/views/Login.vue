@@ -92,8 +92,8 @@ export default {
   props: ["params"],
   data() {
     return {
-      password: "5F64Bb711f",
-      serialNumber: "DD17-1218-0365-0470",
+      password: "",
+      serialNumber: "",
       notif: "",
       version: process.env.VUE_APP_VERSION,
       isLoading: false

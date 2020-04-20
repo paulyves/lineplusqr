@@ -75,7 +75,7 @@ export default {
             if(value){
               this.updateLockedStatus({uname:this.extensions[data.extensionNum].username,isLocked:data.isLocked})
                 .then(res=>{
-                  if(res.data == 'success'){
+                  if(res.data.message == 'success'){
                     this.extensions[data.extensionNum].isLocked = data.isLocked;
                   }
                 })
