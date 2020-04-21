@@ -158,6 +158,11 @@ export default {
         element.classList.remove("active");
       });
     }
+  },
+  watch: {
+    active: function (value) {
+     this.$emit('getLockStatus',{uname: this.extensions[value].username, ind : value});
+    }
   }
 };
 </script>

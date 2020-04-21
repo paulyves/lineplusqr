@@ -11,13 +11,13 @@
         @slideChange="currentSlide"
       >
         <swiper-slide v-for="(extension, index) in extensions" :key="index">
-          <MobileBlock :extension="extension" :ind="index" :isActive="index==active" :isReg ="extension.act_date" />
+          <MobileBlock :extension="extension" :ind="index" :isActive="index==active" :isReg ="extension.act_date" :isLocked="extension.isLocked" @toggleLock="toggleLock"/>
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div>
-    <div class="reg-con container">
+    <div class="reg-con container" :class="{'invi' : getDeviceInfo.length == 0}">
       <div class="row " :class="{'d-none' : getDeviceInfo.length == 0}">
         <!-- <div class="reg-col"> -->
           <div class="container-fluid">
@@ -94,11 +94,19 @@ export default {
     currentSlide() {
       this.active = this.$refs.mySwiper.swiper.activeIndex;
     },
+    toggleLock(data){
+      this.$emit('toggleLock',data)
+    },
     logout() {
       localStorage.removeItem("l_token");
       this.$router.push({
         name: "login"
       });
+    }
+  },
+  watch: {
+    active: function (value) {
+     this.$emit('getLockStatus',{uname: this.extensions[value].username, ind : value});
     }
   }
 };
@@ -128,6 +136,9 @@ img {
   cursor: pointer;
   font-weight: 550;
   z-index: 2;
+}
+.invi{
+  background-color: transparent !important;
 }
 .reg-con {
   background: #231f20;

@@ -9,8 +9,8 @@
       <div
         class="col-8 p-3 rounded bg-white d-flex justify-content-center flex-column"
       >
-        <div class="badge-con" :class="[{'active':isActive},{'d-none':!isReg}]">
-          <img src="@/assets/check.png" alt="" srcset="" class="check-img" />
+        <div class="lock-container" :class="{'locked': isLocked}" @click="toggleLock" @mouseenter="changeImgOnHover" @mouseleave="retainCurrentImg">
+          <img :src="getImgPath()" class="locked-icon">
         </div>
         <div :class="`qr${ind}`" class="qr"></div>
         <small class="align-self-center">Login QR code</small>
@@ -62,7 +62,22 @@
 const QRCode = require("easyqrcodejs");
 export default {
   name: "mobile-block",
-  props: ["extension", "ind", "isActive","isReg"],
+  // props: ["extension", "ind", "isActive","isReg"],
+  props: {
+    extension : Object,
+    ind : Number,
+    isActive : Boolean,
+    isReg : String,
+    isLocked : {
+      type: Boolean,
+      default : false
+    }
+  },
+  data(){
+    return{
+      imgPath : "qr_portal_unlock.svg"
+    }
+  },
   mounted() {
     let options = {
       text: this.extension.qr,
@@ -101,6 +116,21 @@ export default {
       buttons.forEach(element => {
         element.classList.remove = "active";
       });
+    },
+     toggleLock(){
+      this.$emit('toggleLock',{extensionNum: this.ind, isLocked: !this.extension.isLocked})
+    },
+    getImgPath(){
+      this.imgPath = this.isLocked? "qr_portal_locked.svg": "qr_portal_unlock.svg";
+      return  require("@/assets/"+ this.imgPath);
+    },
+    changeImgOnHover(event){
+      let tempImg = this.isLocked? "qr_portal_unlock.svg":"qr_portal_locked.svg";
+      event.target.children[0].src = require("@/assets/"+ tempImg);
+    },
+    retainCurrentImg(event){
+      let tempImg = this.isLocked? "qr_portal_locked.svg": "qr_portal_unlock.svg";
+      event.target.children[0].src = require("@/assets/"+ tempImg);
     }
   },
   computed: {
@@ -146,5 +176,36 @@ export default {
 .check-img {
   height: 65%;
   width: 65%;
+}
+.lock-container{
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  background: #231f20;
+  top: -20px;
+  right: -20px;
+  border-radius: 50%;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: .3s;
+}
+.locked:hover{
+  opacity: 1;
+}
+.locked{
+  height: 100% !important;
+  width:100% !important;
+  border-radius: 8px !important;
+  top: 0 !important;
+  right: 0 !important;
+  opacity: 0.9;
+}
+.locked-icon{
+  height: 65%;
+  width: 65%;
+  transition-duration: .3s;
 }
 </style>

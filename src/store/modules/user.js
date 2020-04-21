@@ -51,6 +51,19 @@ const actions = {
       });
     });
   },
+  postForLockStatus({state},obj){
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + state.token;
+    return new Promise(function(resolve,reject){
+      axios
+      .post(process.env.VUE_APP_API_URL+"/account/lock/status",{uname: obj.uname})
+      .then(response => {
+        resolve(response)
+      })
+      .catch(error =>{
+        reject(error)
+      });
+    });
+  },
   // logoutUser({commit,state}){
   //     localStorage.removeItem('l_token');
   //     commit("removeToken");

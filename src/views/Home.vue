@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div @click="logout" class="float-right d-none d-md-block logout-link">Log out</div>
-    <Desktop :extensions="extensions" class="d-none d-md-block mt-5" v-if="extensions[0]" @toggleLock="toggleLock"/>
-    <Mobile :extensions="extensions" class="d-block d-md-none" />
+    <Desktop :extensions="extensions" class="d-none d-md-block mt-5" v-if="extensions[0]" @toggleLock="toggleLock" @getLockStatus="getLockStatus"/>
+    <Mobile :extensions="extensions" class="d-block d-md-none" @toggleLock="toggleLock" @getLockStatus="getLockStatus"  />
     <h2 class="pt-5 d-block d-md-none" v-if="error">{{ errorMsg }}</h2>
   </div>
 </template>
@@ -24,14 +24,16 @@ export default {
       extensions: [],
       error: true,
       errorMsg: "",
-      toLock: true
+      toLock: true,
+      poll : null,
+      pollExtension : ""
     };
   },
  computed: {
     ...mapGetters(["allExtensions"])
   },
   methods: {
-    ...mapActions(["postQrs","addErrorMsg","updateLockedStatus"]),
+    ...mapActions(["postQrs","addErrorMsg","updateLockedStatus","postForLockStatus"]),
     getQrs() {
       this.postQrs()
         .then(response => {
@@ -77,13 +79,38 @@ export default {
                 .then(res=>{
                   if(res.data.message == 'success'){
                     this.extensions[data.extensionNum].isLocked = data.isLocked;
+                    this.pollLockStatus(data);
                   }
                 })
             }
           })
-          .catch((  ) => {
+          .catch(() => {
             // An error occurred
           })
+    },
+    getLockStatus(obj){
+      this.postForLockStatus({uname:obj.uname}).then(res =>{
+        this.extensions[obj.ind].isLocked = res.data.is_locked;
+      })
+      if(this.pollExtension != obj.uname){
+        clearInterval(this.poll);
+        this.pollExtension = "";
+      }
+    },
+    pollLockStatus(data){
+      clearInterval(this.poll);
+      if(!data.isLocked){
+        this.pollExtension = this.extensions[data.extensionNum].username;
+        this.poll = setInterval(()=>{
+          this.postForLockStatus({uname:this.extensions[data.extensionNum].username}).then(res =>{
+            this.extensions[data.extensionNum].isLocked = res.data.is_locked;
+            if(res.data.is_locked){
+              clearInterval(this.poll);
+            }
+          })
+        }, 5000);
+      }
+      
     },
     logout(){
       localStorage.removeItem('l_token');
