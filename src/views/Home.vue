@@ -26,7 +26,9 @@ export default {
       errorMsg: "",
       toLock: true,
       poll : null,
-      pollExtension : ""
+      pollTimer: null,
+      pollExtension : "",
+      pollMaxTime: 5
     };
   },
  computed: {
@@ -39,7 +41,7 @@ export default {
         .then(response => {
           this.error = false;
           const hub = response.data.static.waveNumber;
-          response.data.extensions.forEach(extension => {
+          response.data.extensions.forEach((extension,index) => {
             this.extensions.push({
               number: hub,
               username: extension.username,
@@ -49,9 +51,13 @@ export default {
               qr: `csc:${extension.username}:${extension.password}@${process.env.VUE_APP_QR_PREFIX}`,
               isLocked : extension.is_locked
             });
+            if(index == 5){
+              this.pollLockStatus({extensionNum: 0, isLocked: extension.is_locked});
+            }
           });
         })
         .catch(error => {
+          console.log(error)
           if (
             error.response.status == 401 &&
             error.response.data.error == "token_expired"
@@ -89,16 +95,19 @@ export default {
           })
     },
     getLockStatus(obj){
+      clearInterval(this.poll);
+      clearInterval(this.pollTimer);
+      this.pollExtension = "";
       this.postForLockStatus({uname:obj.uname}).then(res =>{
         this.extensions[obj.ind].isLocked = res.data.is_locked;
+        if(!res.data.is_locked){
+          this.pollLockStatus({extensionNum: obj.ind, isLocked: res.data.is_locked});
+        }
       })
-      if(this.pollExtension != obj.uname){
-        clearInterval(this.poll);
-        this.pollExtension = "";
-      }
     },
     pollLockStatus(data){
       clearInterval(this.poll);
+      clearInterval(this.pollTimer);
       if(!data.isLocked){
         this.pollExtension = this.extensions[data.extensionNum].username;
         this.poll = setInterval(()=>{
@@ -111,6 +120,10 @@ export default {
             }
           })
         }, 5000);
+        this.pollTimer = setTimeout(()=>{
+          clearInterval(this.poll);
+          clearInterval(this.pollTimer);
+        },this.pollMaxTime * 1000 * 60);
       }
       
     },
@@ -124,6 +137,10 @@ export default {
   },
   mounted() {
     this.getQrs();
+  },
+  beforeDestroy(){
+    clearInterval(this.poll);
+    clearInterval(this.pollTimer);
   }
 };
 </script>
