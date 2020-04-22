@@ -104,6 +104,8 @@ export default {
         this.poll = setInterval(()=>{
           this.postForLockStatus({uname:this.extensions[data.extensionNum].username}).then(res =>{
             this.extensions[data.extensionNum].isLocked = res.data.is_locked;
+            this.extensions[data.extensionNum].device = res.data.device;
+            this.extensions[data.extensionNum].act_date = res.data.act_date;
             if(res.data.is_locked){
               clearInterval(this.poll);
             }
