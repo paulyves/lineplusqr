@@ -85,8 +85,8 @@ export default {
     createQr() {
       let options = {
         text: this.qrCode,
-        logo: require("@/assets/pldt.png"),
-        colorDark: this.extensionNum < this.getNumOfRg ? "#d32030" : "#12a74f",
+        logo: require("@/assets/wavephone.png"),
+        colorDark: this.extensionNum < this.getNumOfRg ? "#1946b9" : "#12a74f",
         width: 350,
         height: 350,
         correctLevel: QRCode.CorrectLevel.H,
@@ -164,8 +164,8 @@ export default {
   border-radius: 15px;
 }
 .ringgroup {
-  background-color: #d32030;
-  /* background-color: #1946b9; */
+  /* background-color: #d32030; */
+  background-color: #1946b9;
 }
 .not-ringgroup {
   background-color: #0c9347;

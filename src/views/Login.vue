@@ -145,7 +145,7 @@ export default {
 <style scoped>
 .login {
   min-height: 100vh;
-  background-image: url("~@/assets/login_screen_bg.jpg");
+  background-image: url("~@/assets/login_screen_bg.png");
   background-size: cover;
   
   /* background: url('@assets/login_screen_bg.jpg') */
