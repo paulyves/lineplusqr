@@ -26,6 +26,7 @@
                       :extensionNum="index"
                       :status="active == index"
                       :isReg ="extension.act_date"
+                      :username ="extension.username"
                       @setActive="setActive"
                     />
                   </div>

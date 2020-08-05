@@ -13,7 +13,7 @@
         { active: status || hover }
       ]"
     >
-      {{ extensionNum + 12 }}
+      {{ extensionNumber }}
     </div>
   </div>
 </template>
@@ -21,7 +21,7 @@
 <script>
 export default {
   name: "circular-option",
-  props: ["extensionNum", "status","isReg"],
+  props: ["extensionNum", "status","isReg","username"],
   data(){
     return {
       hover: false
@@ -30,6 +30,9 @@ export default {
   computed:{
     getNumOfRg(){
       return parseInt(process.env.VUE_APP_NUM_OF_RG)
+    },
+    extensionNumber() {
+      return this.username.slice(-2);
     }
   },
   methods: {

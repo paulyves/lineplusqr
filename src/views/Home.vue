@@ -35,7 +35,7 @@ export default {
     ...mapGetters(["allExtensions"])
   },
   methods: {
-    ...mapActions(["postQrs","addErrorMsg","updateLockedStatus","postForLockStatus"]),
+    ...mapActions(["postQrs","addErrorMsg","updateLockedStatus","postForLockStatus","refreshToken"]),
     getQrs() {
       this.postQrs()
         .then(response => {
@@ -57,7 +57,6 @@ export default {
           });
         })
         .catch(error => {
-          console.log(error)
           if (
             error.response.status == 401 &&
             error.response.data.error == "token_expired"
@@ -86,6 +85,7 @@ export default {
                   if(res.data.message == 'success'){
                     this.extensions[data.extensionNum].isLocked = data.isLocked;
                     this.pollLockStatus(data);
+                    this.refreshToken();
                   }
                 })
             }
@@ -103,7 +103,18 @@ export default {
         if(!res.data.is_locked){
           this.pollLockStatus({extensionNum: obj.ind, isLocked: res.data.is_locked});
         }
-      })
+        this.refreshToken();
+      }).catch(error => {
+          if (
+            error.response.status == 401 &&
+            error.response.data.error == "token_expired"
+          ){
+            this.addErrorMsg("Session Timeout");
+            this.$router.push({
+              name: "login"
+            });
+          }
+        });
     },
     pollLockStatus(data){
       clearInterval(this.poll);
@@ -118,7 +129,17 @@ export default {
             if(res.data.is_locked){
               clearInterval(this.poll);
             }
-          })
+          }).catch(error => {
+          if (
+            error.response.status == 401 &&
+            error.response.data.error == "token_expired"
+          ){
+            this.addErrorMsg("Session Timeout");
+            this.$router.push({
+              name: "login"
+            });
+          }
+        });
         }, 5000);
         this.pollTimer = setTimeout(()=>{
           clearInterval(this.poll);
