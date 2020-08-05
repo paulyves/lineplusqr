@@ -8,14 +8,14 @@
             <div class="col-md-12 col-12">
               <div class="row justify-content-center mt-2">
                 <img
-                  src="../assets/login_logo.png"
+                  src="../assets/wave.png"
                   class="img-fluid"
                   alt="Responsive image"
                 />
               </div>
               <div class="row">
                 <form class="container col-10">
-                  <div class="form-group text-center">
+                  <div class="form-group">
                     <label for="senumber">Serial Number</label>
                     <input
                       type="text"
@@ -25,7 +25,7 @@
                       :maxlength="19"
                     />
                   </div>
-                  <div class="form-group text-center">
+                  <div class="form-group">
                     <label for="inputPasswd">Password</label>
                     <PasswordToggle
                       v-model="password"
@@ -145,8 +145,14 @@ export default {
 <style scoped>
 .login {
   min-height: 100vh;
-  background-image: url("~@/assets/login_screen_bg.png");
+  /* background-image: url("~@/assets/login_screen_bg.png"); */
   background-size: cover;
+  background: rgb(9, 141, 202);
+  background: linear-gradient(
+    0deg,
+    rgba(9, 141, 202, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
   
   /* background: url('@assets/login_screen_bg.jpg') */
 }
